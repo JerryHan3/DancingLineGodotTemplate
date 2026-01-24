@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://bvchtbimvb182"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_xq6xi"]
+friction = 0.5
+bounce = 0.5
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tb4tw"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_5jtns"]
+
+[node name="DeathParticle" type="RigidBody3D"]
+collision_layer = 2
+physics_material_override = SubResource("PhysicsMaterial_xq6xi")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_tb4tw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_5jtns")
