@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://c8645fj2axxab"]
+
+[ext_resource type="PackedScene" uid="uid://vyxmowmep5fb" path="res://Player.tscn" id="1_5umic"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vtnov"]
+
+[sub_resource type="Sky" id="Sky_gj24r"]
+sky_material = SubResource("ProceduralSkyMaterial_vtnov")
+
+[sub_resource type="Environment" id="Environment_m8h1p"]
+background_mode = 2
+sky = SubResource("Sky_gj24r")
+
+[node name="Main" type="Node3D"]
+
+[node name="Player" parent="." instance=ExtResource("1_5umic")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_m8h1p")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.5, -0.764655, 0.406574, 0, 0.469472, 0.882948, -0.866025, 0.441474, -0.234736, 0, 0, 0)
