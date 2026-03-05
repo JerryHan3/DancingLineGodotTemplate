@@ -7,8 +7,8 @@ var move_direction: Vector2 = Vector2(0,0)
 @onready var mesh: MeshInstance3D = $Mesh
 @onready var music: AudioStreamPlayer = $Music 
 
-@onready var camera: Camera3D = $CameraOrigin/Camera
-@onready var camera_pos: Marker3D = $CameraOrigin/CameraPos
+# @onready var camera: Camera3D = $CameraOrigin/Camera
+# @onready var camera_pos: Marker3D = $CameraOrigin/CameraPos
 @onready var detector: Area3D = $Detector
 
 var _current_track: MeshInstance3D = null
@@ -99,8 +99,8 @@ func _physics_process(delta: float) -> void:
 			elif collider.is_in_group("wall"):
 				death()
 	
-	# TODO: Switch to Phantom Camera addon	
-	camera.global_position = lerp(camera.global_position, camera_pos.global_position, 0.05)
+	# DONE: Switch to Phantom Camera addon	
+	# camera.global_position = lerp(camera.global_position, camera_pos.global_position, 0.05)
 	
 func new_track() -> void:
 	_track_from_pos.x = global_position.x

@@ -1,7 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://c2sv68t5t61jq"]
+[gd_scene load_steps=18 format=3 uid="uid://c2sv68t5t61jq"]
 
 [ext_resource type="PackedScene" uid="uid://c6uu6nk2msmlk" path="res://gameObjects/Line.tscn" id="1_glv2v"]
+[ext_resource type="Script" uid="uid://csjccrhj5wnx7" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="2_fos0i"]
 [ext_resource type="Texture2D" uid="uid://cmc7lranbm1bp" path="res://assets/textures/chessboard.tres" id="2_uu6xs"]
+[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="3_3dxm6"]
+[ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="5_lgr22"]
 
 [sub_resource type="Environment" id="Environment_glv2v"]
 ssao_enabled = true
@@ -41,6 +44,9 @@ texture_filter = 0
 [sub_resource type="BoxMesh" id="BoxMesh_fos0i"]
 material = SubResource("StandardMaterial3D_cm0pq")
 size = Vector3(50, 1, 50)
+
+[sub_resource type="Resource" id="Resource_fos0i"]
+script = ExtResource("3_3dxm6")
 
 [node name="Node3D" type="Node3D"]
 
@@ -98,3 +104,30 @@ shape = SubResource("BoxShape3D_r0du0")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ground/CSGBox3D4"]
 mesh = SubResource("BoxMesh_fos0i")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+physics_interpolation_mode = 1
+transform = Transform3D(-0.7071068, 0.49746838, -0.5025189, -2.9802322e-08, 0.71066904, 0.70352656, 0.7071068, 0.4974684, -0.5025189, -5, 7, -5)
+top_level = true
+
+[node name="PhantomCameraHost" type="Node" parent="Camera3D"]
+process_priority = 300
+process_physics_priority = 300
+script = ExtResource("5_lgr22")
+metadata/_custom_type_script = "uid://bd046eokvcnu2"
+
+[node name="PhantomCamera3D" type="Node3D" parent="." node_paths=PackedStringArray("follow_target", "look_at_target")]
+transform = Transform3D(-0.7071068, 0.49746838, -0.5025189, -2.9802322e-08, 0.71066904, 0.70352656, 0.7071068, 0.4974684, -0.5025189, -5, 7, -5)
+top_level = true
+script = ExtResource("2_fos0i")
+follow_mode = 2
+follow_target = NodePath("../Line")
+look_at_mode = 2
+look_at_target = NodePath("../Line")
+tween_resource = SubResource("Resource_fos0i")
+follow_offset = Vector3(-5, 7, -5)
+follow_damping = true
+follow_damping_value = Vector3(0.25, 0.25, 0.25)
+align_transform_with_view = Callable()
+align_position_with_view = Callable()
+align_rotation_with_view = Callable()

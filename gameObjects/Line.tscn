@@ -44,16 +44,6 @@ shape = SubResource("BoxShape3D_rp6vb")
 [node name="Mesh" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_0lsht")
 
-[node name="CameraOrigin" type="Marker3D" parent="."]
-transform = Transform3D(-1.4142135, 0.99999994, -0.99999994, 0, 1.4142135, 1.4142135, 1.4142135, 0.99999994, -0.99999994, 0, 0, 0)
-
-[node name="CameraPos" type="Marker3D" parent="CameraOrigin"]
-transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 0, 5)
-
-[node name="Camera" type="Camera3D" parent="CameraOrigin"]
-transform = Transform3D(-0.7071068, 0.5, -0.5, 0, 0.7071068, 0.7071068, 0.7071068, 0.5, -0.5, -4.9999995, 7.071068, -4.9999995)
-top_level = true
-
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_7clfx")
 
