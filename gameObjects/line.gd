@@ -9,6 +9,7 @@ var move_direction: Vector2 = Vector2(0,0)
 
 @onready var camera: Camera3D = $CameraOrigin/Camera
 @onready var camera_pos: Marker3D = $CameraOrigin/CameraPos
+@onready var detector: Area3D = $Detector
 
 var current_track: MeshInstance3D = null
 var track_from_pos: Vector2 = Vector2(0,0)
@@ -30,6 +31,8 @@ func _ready() -> void:
 	trail_group.name = "TrailGroup"
 	get_parent().add_child.call_deferred(trail_group)
 	print(trail_group)
+
+	detector.area_entered.connect(_on_area_entered)
 
 func _physics_process(delta: float) -> void:
 
@@ -85,15 +88,17 @@ func _physics_process(delta: float) -> void:
 			else:
 				current_track = null
 	
-		# Death trigger
-		# TODO: Only trigger death when hitting tagged objects
-		if is_on_wall():
-			death()
-
-		# TODO: Void death trigger
-
-		# TODO: Success trigger
-
+		# Death trigger for Collider3D
+		# DONE: Only trigger death when hitting tagged objects
+		# if is_on_wall():
+		# 	death()
+		for i in range(get_slide_collision_count()):
+			var collider = get_slide_collision(i).get_collider()
+			if collider == null:
+				continue
+			elif collider.is_in_group("wall"):
+				death()
+	
 	# TODO: Switch to Phantom Camera addon	
 	camera.global_position = lerp(camera.global_position, camera_pos.global_position, 0.05)
 	
@@ -108,6 +113,14 @@ func new_track() -> void:
 	trail_group.add_child(track)
 	current_track = track
 	track.global_position = global_position
+
+# Trigger handler
+func _on_area_entered(area: Area3D) -> void:
+	if area.is_in_group("wall"):
+		death() # Area3D wall
+	elif area.is_in_group("void"):
+		death(true) # DONE: Void death trigger
+	# TODO: Success trigger
 
 func death(void_death: bool = false) -> void:
 	dead = true

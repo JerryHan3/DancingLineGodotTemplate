@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://c2sv68t5t61jq"]
+[gd_scene load_steps=14 format=3 uid="uid://c2sv68t5t61jq"]
 
 [ext_resource type="PackedScene" uid="uid://c6uu6nk2msmlk" path="res://gameObjects/Line.tscn" id="1_glv2v"]
 
@@ -23,6 +23,30 @@ albedo_texture = SubResource("GradientTexture2D_glv2v")
 uv1_triplanar = true
 texture_filter = 0
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_glv2v"]
+size = Vector3(1, 3, 5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_uu6xs"]
+size = Vector3(1, 3, 5)
+
+[sub_resource type="MeshTexture" id="MeshTexture_glv2v"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cm0pq"]
+albedo_color = Color(1, 0, 0, 1)
+albedo_texture = SubResource("MeshTexture_glv2v")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_uu6xs"]
+size = Vector3(5, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_r0du0"]
+size = Vector3(5, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fos0i"]
+albedo_color = Color(0, 0.51, 0.068000056, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3dxm6"]
+size = Vector3(500, 10, 500)
+
 [node name="Node3D" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -34,14 +58,41 @@ shadow_enabled = true
 
 [node name="Line" parent="." instance=ExtResource("1_glv2v")]
 
-[node name="CSGBox3D" type="CSGBox3D" parent="."]
+[node name="CSGBox3D" type="CSGBox3D" parent="." groups=["ground"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 use_collision = true
 size = Vector3(50, 1, 50)
 material = SubResource("StandardMaterial3D_r0du0")
 
-[node name="CSGBox3D4" type="CSGBox3D" parent="."]
+[node name="CSGBox3D4" type="CSGBox3D" parent="." groups=["ground"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -6.297, 30)
 use_collision = true
 size = Vector3(50, 1, 50)
 material = SubResource("StandardMaterial3D_r0du0")
+
+[node name="ExampleWall" type="Area3D" parent="." groups=["wall"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.880592, -4.4867744, 29.856625)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ExampleWall"]
+shape = SubResource("BoxShape3D_glv2v")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="ExampleWall"]
+mesh = SubResource("BoxMesh_uu6xs")
+material = SubResource("StandardMaterial3D_cm0pq")
+
+[node name="ExampleSafeWall" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.098804, -6.1424704, 35.367493)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ExampleSafeWall"]
+shape = SubResource("BoxShape3D_uu6xs")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="ExampleSafeWall"]
+mesh = SubResource("BoxMesh_r0du0")
+material = SubResource("StandardMaterial3D_fos0i")
+
+[node name="Void" type="Area3D" parent="." groups=["void"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -20, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Void"]
+shape = SubResource("BoxShape3D_3dxm6")
+debug_color = Color(0.9370674, 1.2995302e-05, 0.6316623, 0.41960785)

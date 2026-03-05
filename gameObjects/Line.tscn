@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c6uu6nk2msmlk"]
+[gd_scene load_steps=12 format=3 uid="uid://c6uu6nk2msmlk"]
 
 [ext_resource type="Script" uid="uid://yt30ubf11joe" path="res://gameObjects/line.gd" id="1_0lsht"]
 [ext_resource type="AudioStream" uid="uid://c8i7qtxbm0t66" path="res://assets/music/StayInsideMe.mp3" id="2_7clfx"]
@@ -29,6 +29,9 @@ disable_receive_shadows = true
 
 [sub_resource type="SphereMesh" id="SphereMesh_d6126"]
 material = SubResource("StandardMaterial3D_dpsif")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_aqqr8"]
+size = Vector3(0.5, 1, 0.5)
 
 [node name="Line" type="CharacterBody3D"]
 collision_layer = 2
@@ -65,3 +68,8 @@ draw_pass_1 = SubResource("SphereMesh_d6126")
 
 [node name="Death" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_dpsif")
+
+[node name="Detector" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Detector"]
+shape = SubResource("BoxShape3D_aqqr8")
